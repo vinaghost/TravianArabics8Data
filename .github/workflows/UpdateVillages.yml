@@ -33,5 +33,5 @@ jobs:
         working-directory: release/MapSqlDownloader
       - name: Post Run map.sql downloader
         run: |
-          cp -a release/MapSqlDownloader/${{ matrix.world_url }}/. .
+          cp -r release/MapSqlDownloader/${{ matrix.world_url }}/. .
           ls -R
