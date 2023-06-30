@@ -35,5 +35,5 @@ jobs:
         run: |
           [ -d ${{ matrix.world_url }} ] || mkdir ${{ matrix.world_url }}
           cp -r release/MapSqlDownloader/${{ matrix.world_url }}/. ${{ matrix.world_url }}
-          rm release
+          rm -r release
           ls -R
