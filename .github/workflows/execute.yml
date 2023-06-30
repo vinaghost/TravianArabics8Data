@@ -1,4 +1,4 @@
-name: Update database
+name: Update villages
 on:
   schedule:
   # from RELEASE POLARBEAR 1171.1, map.sql is updated every midnight server time
