@@ -32,6 +32,5 @@ jobs:
       - name: Post Run map.sql downloader
         run: |
           ls -R
-          [ -d ${{ matrix.world_url }} ] || mkdir ${{ matrix.world_url }}
-          cp MapSqlDownloader/*.json ${{ matrix.world_url }}
+          cp -a MapSqlDownloader/${{ matrix.world_url }}/. .
           ls
