@@ -21,16 +21,17 @@ jobs:
         with:
           repository: "vinaghost/TravianMapSqlAnalytics"
           latest: true
+          out-file-path: "release"
       - name: Extract
         run: |
           tar -xvf MapSqlDownloader.tar.gz
+        working-directory: release
       - name: Run map.sql downloader
         run: |
           chmod +x ./MapSqlDownloader
           ./MapSqlDownloader ${{ matrix.world_url }}
-        working-directory: MapSqlDownloader
+        working-directory: release/MapSqlDownloader
       - name: Post Run map.sql downloader
         run: |
+          cp -a release/MapSqlDownloader/${{ matrix.world_url }}/. .
           ls -R
-          cp -a MapSqlDownloader/${{ matrix.world_url }}/. .
-          ls
