@@ -7,7 +7,7 @@ on:
     - cron:  00 00 * * *
   workflow_dispatch:
 jobs:
-  execute:
+  Execute:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,7 +22,7 @@ jobs:
           repository: "vinaghost/TravianMapSqlAnalytics"
           latest: true
           out-file-path: "release"
-      - name: Extract
+      - name: Extract release
         run: |
           tar -xvf MapSqlDownloader.tar.gz
         working-directory: release
@@ -33,5 +33,7 @@ jobs:
         working-directory: release/MapSqlDownloader
       - name: Post Run map.sql downloader
         run: |
-          cp -r release/MapSqlDownloader/${{ matrix.world_url }}/. .
+          [ -d ${{ matrix.world_url }} ] || mkdir ${{ matrix.world_url }}
+          cp -r release/MapSqlDownloader/${{ matrix.world_url }}/. ${{ matrix.world_url }}
+          rm release
           ls -R
