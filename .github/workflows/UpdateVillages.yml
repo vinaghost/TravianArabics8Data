@@ -4,7 +4,7 @@ on:
   # from RELEASE POLARBEAR 1171.1, map.sql is updated every midnight server time
   # (which is 00:00 GMT+1 or 23:00 GMT)
   # we execute after 1 hour to make sure map.sql updated
-    - cron:  '00 00 * * *'  
+    - cron:  00 00 * * *
   workflow_dispatch:
 jobs:
   execute:
@@ -12,8 +12,10 @@ jobs:
     strategy:
       matrix:
         world_url: 
-          - "ts8.x1.arabics.travian.com"
+          - ts8.x1.arabics.travian.com
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2        
       - name: Download build
         uses: robinraju/release-downloader@v1.7
         with:
@@ -22,9 +24,13 @@ jobs:
       - name: Extract
         run: |
           tar -xvf MapSqlDownloader.tar.gz
-      - name: Run world updator
+      - name: Run map.sql downloader
         run: |
           chmod +x ./MapSqlDownloader
           ./MapSqlDownloader ${{ matrix.world_url }}
-          pwd
         working-directory: MapSqlDownloader
+      - name: Post Run map.sql downloader
+        run: |
+          [ -d ${{ matrix.world_url }} ] || mkdir ${{ matrix.world_url }}
+          cp MapSqlDownloader/*.json ${{ matrix.world_url }}
+          ls
